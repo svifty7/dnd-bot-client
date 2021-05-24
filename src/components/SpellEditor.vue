@@ -241,7 +241,11 @@
             }
         },
         mounted() {
-            this.getSpells();
+            const token = localStorage.getItem('token');
+
+            if (token === process.env.VUE_APP_TOKEN) {
+                this.getSpells();
+            }
         },
         methods: {
             getSpells() {

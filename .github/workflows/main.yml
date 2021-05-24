@@ -18,6 +18,7 @@ jobs:
                     {
                         echo VUE_APP_SERVER_HOST=${{ secrets.SERVER_HOST }}
                         echo VUE_APP_SERVER_PORT=${{ secrets.SERVER_PORT }}
+                        echo VUE_APP_TOKEN=${{ secrets.TOKEN }}
                     } > .env
 
             - name: Setup Node.js environment
