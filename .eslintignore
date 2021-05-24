@@ -1,0 +1,7 @@
+build/**/*.js
+test/**/*
+src/locales/**/*.js
+!src/locales/**/ru.js
+
+# Proto generated files
+src/services/connectors/grpc/proto/**/*.js

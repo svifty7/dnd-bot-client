@@ -1,0 +1,51 @@
+{
+    "name": "tg-bot-client",
+    "description": "The client for telegram bot",
+    "version": "0.1.0",
+    "author": "Nikita Charushin <svifty7@gmail.com>",
+    "license": "MIT",
+    "private": true,
+    "scripts": {
+        "serve": "vue-cli-service serve",
+        "build": "vue-cli-service build",
+        "lint": "vue-cli-service lint"
+    },
+    "dependencies": {
+        "axios": "^0.21.1",
+        "bson": "^4.4.0",
+        "core-js": "^3.6.5",
+        "mongoose": "^5.12.10",
+        "normalize.css": "^8.0.1",
+        "vue": "^2.6.12"
+    },
+    "devDependencies": {
+        "@typescript-eslint/eslint-plugin": "^3.3.0",
+        "@typescript-eslint/parser": "^3.3.0",
+        "@vue/cli-plugin-babel": "~4.5.0",
+        "@vue/cli-plugin-eslint": "~4.5.0",
+        "@vue/cli-service": "~4.5.0",
+        "@vue/eslint-config-airbnb": "^5.0.2",
+        "babel-eslint": "^10.1.0",
+        "eslint": "6.8.0",
+        "eslint-config-airbnb-base": "14.2.0",
+        "eslint-loader": "4.0.2",
+        "eslint-plugin-import": "2.22.0",
+        "eslint-plugin-vue": "6.2.2",
+        "lint-staged": "^9.5.0",
+        "node-sass": "^4.12.0",
+        "sass-loader": "^8.0.2",
+        "stylelint": "^13.13.1",
+        "stylelint-order": "^4.1.0",
+        "typescript": "^3.9.5",
+        "vue-template-compiler": "^2.6.12"
+    },
+    "gitHooks": {
+        "pre-commit": "lint-staged"
+    },
+    "lint-staged": {
+        "*.{js,jsx,vue}": [
+            "vue-cli-service lint",
+            "git add"
+        ]
+    }
+}

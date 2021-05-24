@@ -1,0 +1,45 @@
+// * 1. Colors
+@import "colors";
+
+// * 2. Mixins
+// Animation
+@mixin css_anim($item: all, $time: .2s, $style: ease-in-out, $timeout: 0s) {
+  transition: $item $style $time;
+}
+
+@mixin svg-base() {
+  width: 16px;
+  height: 16px;
+
+  svg {
+    width: 100%;
+    height: 100%;
+    color: currentColor;
+    vertical-align: initial;
+  }
+}
+
+@mixin empty-block($width, $height: $width, $display: block) {
+  content: '';
+  display: $display;
+  width: $width;
+  height: $height;
+}
+
+@mixin back-img($size: cover, $posX: center, $posY: center, $repeat: no-repeat) {
+  background-size: $size;
+  background-position-x: $posX;
+  background-position-y: $posY;
+  background-repeat: $repeat;
+}
+
+// <transition name="vue-anim"/>
+.vue-anim {
+  &-fade-enter-active {
+    @include css_anim;
+  }
+
+  &-fade-leave-active {
+    transition: none;
+  }
+}

@@ -1,0 +1,10 @@
+build/**/*
+config/**/*
+test/**/*
+dist/**/*
+
+# Proto generated files
+src/grpc/proto/**/*.js
+
+# Temp
+src/components/editor/**/*

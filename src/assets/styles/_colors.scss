@@ -1,0 +1,111 @@
+// ## ELMA Colors
+$theme-dark-blue: #5082e6;
+$theme-yellow: #fabe00;
+$theme-red: #e62d32;
+$theme-blue: #5ad2ff;
+
+// ## Base Colors
+$blue: #456EBF;
+$yellow: #F8BD2C;
+$green: #3EA853;
+$red: #E62D32;
+$black: #000000;
+$white: #FFFFFF;
+
+// ## Secondary Colors
+$menu: #FCFCFC;
+$background: #F7F7F7;
+
+// ## Shades of colors
+// Shades of Blue
+$blue-50: #EAF0FE;
+$blue-100: #CDDBF8;
+$blue-200: #ABC1ED;
+$blue-300: #8DAAE2;
+$blue-400: #5F84CD;
+$blue-600: #4069BA;
+$blue-700: #3962B3;
+
+// Shades of Yellow
+$yellow-50: #FEF8E2;
+$yellow-100: #FDEBB5;
+$yellow-200: #FBDE87;
+$yellow-300: #FAD35A;
+$yellow-400: #F9C83C;
+$yellow-600: #F9B12A;
+$yellow-700: #F89E27;
+
+// Shades of Green
+$green-50: #E8F9EB;
+$green-100: #D1F8D9;
+$green-200: #AEE8B9;
+$green-300: #89DE98;
+$green-400: #62C976;
+$green-600: #3CA14F;
+$green-700: #38964A;
+
+// Shades of Red
+$red-50: #FFEAEE;
+$red-100: #FECCD3;
+$red-200: #EE989B;
+$red-300: #E46F74;
+$red-400: #EE4D53;
+$red-600: #D22533;
+$red-700: #C51F2C;
+
+// Shades of Black
+$black-100: #E9E9E9;
+$black-200: #D0D0D0;
+$black-300: #B1B1B1;
+$black-400: #888888;
+$black-600: #6E6E6E;
+$black-700: #545454;
+
+:export {
+  themeDarkBlue: $theme-dark-blue;
+  themeYellow: $theme-yellow;
+  themeRed: $theme-red;
+  themeBlue: $theme-blue;
+  blue: $blue;
+  yellow: $yellow;
+  green: $green;
+  red: $red;
+  black: $black;
+  white: $white;
+  menu: $menu;
+  background: $background;
+  blue50: $blue-50;
+  blue100: $blue-100;
+  blue200: $blue-200;
+  blue300: $blue-300;
+  blue400: $blue-400;
+  blue600: $blue-600;
+  blue700: $blue-700;
+  yellow50: $yellow-50;
+  yellow100: $yellow-100;
+  yellow200: $yellow-200;
+  yellow300: $yellow-300;
+  yellow400: $yellow-400;
+  yellow600: $yellow-600;
+  yellow700: $yellow-700;
+  green50: $green-50;
+  green100: $green-100;
+  green200: $green-200;
+  green300: $green-300;
+  green400: $green-400;
+  green600: $green-600;
+  green700: $green-700;
+  red50: $red-50;
+  red100: $red-100;
+  red200: $red-200;
+  red300: $red-300;
+  red400: $red-400;
+  red600: $red-600;
+  red700: $red-700;
+  black100: $black-100;
+  black200: $black-200;
+  black300: $black-300;
+  black400: $black-400;
+  black600: $black-600;
+  black700: $black-700;
+}
