@@ -140,6 +140,7 @@
 
 <script>
     import Helpers from '@/helpers/Helpers';
+    import _ from 'lodash';
 
     export default {
         name: 'SpellEditor',
@@ -265,13 +266,7 @@
                 if (!list.length) return;
 
                 list.forEach(item => {
-                    const aliases = item.aliases.join(', ');
-
-                    spells.push({
-                        ...item,
-                        source: this.sources.PHB.key,
-                        aliases
-                    })
+                    spells.push(this.getParsedSpell(item))
                 });
 
                 this.spells = spells;
@@ -281,6 +276,15 @@
                 const lastSpell = this.spells.find(spell => spell._id === lastSpellID);
 
                 this.setSpellForEdit(lastSpell || spells[0])
+            },
+
+            getParsedSpell(spell) {
+                const aliases = spell.aliases.join(', ');
+
+                return _.cloneDeep({
+                    ...spell,
+                    aliases
+                })
             },
 
             setSpellForEdit(spell) {
@@ -297,20 +301,25 @@
                 return this.spell._id === spell._id
             },
 
-            saveSpell() {
-                const spell = {
-                    ...this.spell,
-                    aliases: this.spell.aliases ? this.spell.aliases.split(', ') : []
+            async saveSpell(spell = undefined) {
+                const spellForUpdate = _.cloneDeep(spell || this.spell);
+                const newSpell = {
+                    ...spellForUpdate,
+                    aliases: spellForUpdate.aliases ? spellForUpdate.aliases.split(', ') : []
                 }
 
-                this.$axios({
+                await this.$axios({
                     method: 'post',
                     url: '/update-spell',
                     data: {
-                        spell: { ...spell }
+                        spell: { ...newSpell }
                     }
                 }).then(res => {
-                    this.saved = !!Helpers.isQuerySuccess(res);
+                    if (Helpers.isQuerySuccess(res)) {
+                        this.saved = true;
+
+                        this.updateSpell(res.data);
+                    }
                 }).catch(() => {
                     this.saved = false
                 }).finally(() => {
@@ -318,6 +327,16 @@
                         this.saved = undefined;
                     }, 2000)
                 })
+            },
+
+            async updateSpell(spell) {
+                // eslint-disable-next-line no-underscore-dangle
+                const index = this.spells.findIndex(item => item._id === spell._id);
+                const newSpell = this.getParsedSpell(spell);
+
+                this.spells[index] = newSpell;
+
+                this.setSpellForEdit(newSpell)
             },
         }
     }
@@ -409,6 +428,16 @@
 
                     border-color: $black-300;
                 }
+            }
+
+            select {
+                cursor: pointer;
+            }
+
+            textarea {
+                height: auto;
+                min-height: 256px;
+                resize: none;
             }
         }
 
