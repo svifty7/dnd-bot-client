@@ -127,16 +127,30 @@
             </label>
 
             <div class="spell-editor__controls">
-                <button type="button"
-                        class="spell-editor__button"
-                        :class="{
-                            'is-saved': typeof saved === 'boolean' && saved,
-                            'is-error': typeof saved === 'boolean' && !saved
-                        }"
-                        @click.left.exact.prevent="saveSpell"
-                >
-                    Сохранить
-                </button>
+                <div class="spell-editor__saving">
+                    <transition name="vue-anim">
+                        <div v-if="typeof saved === 'boolean'"
+                             class="spell-editor__saving_message"
+                             :class="{
+                                 'is-saved': typeof saved === 'boolean' && saved,
+                                 'is-error': typeof saved === 'boolean' && !saved
+                             }"
+                        >
+                            {{ saved ? '&check; Сохранено' : '&times; Ошибка сохранения' }}
+                        </div>
+                    </transition>
+
+                    <button type="button"
+                            class="spell-editor__button"
+                            :class="{
+                                'is-saved': typeof saved === 'boolean' && saved,
+                                'is-error': typeof saved === 'boolean' && !saved
+                            }"
+                            @click.left.exact.prevent="saveSpell"
+                    >
+                        Сохранить
+                    </button>
+                </div>
             </div>
         </div>
 
@@ -328,9 +342,11 @@
                         this.saved = true;
 
                         this.updateSpell(res.data);
+                    } else {
+                        this.saved = false;
                     }
                 }).catch(() => {
-                    this.saved = false
+                    this.saved = false;
                 }).finally(() => {
                     setTimeout(() => {
                         this.saved = undefined;
@@ -371,7 +387,6 @@
             width: 320px;
             height: 100%;
             flex-shrink: 0;
-            padding: 0 0 12px;
             box-shadow: 0 0 12px transparentize($black-300, .5);
 
             &_title {
@@ -384,7 +399,7 @@
             }
 
             &_list {
-                padding: 12px 0;
+                padding: 16px 0;
                 overflow: auto;
                 height: 100%;
             }
@@ -466,6 +481,31 @@
             justify-content: flex-end;
             width: 100%;
             padding: 12px 16px;
+
+            > * {
+                &:nth-child(n+2) {
+                    margin-left: 8px;
+                }
+            }
+        }
+
+        &__saving {
+            display: flex;
+            align-items: center;
+
+            &_message {
+                font-size: 14px;
+                line-height: 20px;
+                margin-right: 8px;
+
+                &.is-saved {
+                    color: transparentize($green, .2);
+                }
+
+                &.is-error {
+                    color: transparentize($red, .2);
+                }
+            }
         }
 
         &__button {
@@ -480,10 +520,6 @@
             background-color: $blue;
             border: 1px solid $blue;
             cursor: pointer;
-
-            &:nth-child(n+2) {
-                margin-left: 8px;
-            }
 
             &:hover {
                 &:not(:disabled),
