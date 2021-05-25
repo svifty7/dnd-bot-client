@@ -301,8 +301,9 @@
                 return this.spell._id === spell._id
             },
 
-            saveSpell(spell = undefined) {
-                const spellForUpdate = _.cloneDeep(spell || this.spell);
+            saveSpell() {
+                const spellForUpdate = _.cloneDeep(this.spell);
+
                 const newSpell = {
                     ...spellForUpdate,
                     aliases: spellForUpdate.aliases ? spellForUpdate.aliases.split(', ') : []
