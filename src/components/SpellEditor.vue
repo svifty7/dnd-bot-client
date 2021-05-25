@@ -33,23 +33,31 @@
             <label class="spell-editor__field">
                 <span class="spell-editor__field_caption">{{ captions.aliases.label }}</span>
 
-                <input v-model="spell.aliases"
+                <input v-for="(alias, index) in aliases"
+                       :key="index"
+                       :value="alias"
                        type="text"
+                       @input.prevent="updateAliases($event, index)"
                 >
             </label>
 
             <label class="spell-editor__field">
                 <span class="spell-editor__field_caption">{{ captions.level.label }}</span>
 
-                <input v-model="spell.level"
-                       type="text"
-                >
+                <select v-model="spell.level">
+                    <option v-for="option in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]"
+                            :key="option"
+                            :value="option"
+                    >{{ option }}</option>
+                </select>
             </label>
 
             <label class="spell-editor__field">
                 <span class="spell-editor__field_caption">{{ captions.source.label }}</span>
 
-                <select v-model="spell.source">
+                <select v-model="spell.source"
+                        :disabled="true"
+                >
                     <option v-for="option in sources"
                             :key="option.key"
                             :value="option.key"
@@ -60,7 +68,9 @@
             <label class="spell-editor__field">
                 <span class="spell-editor__field_caption">{{ captions.school.label }}</span>
 
-                <select v-model="spell.school">
+                <select v-model="spell.school"
+                        :disabled="true"
+                >
                     <option v-for="option in schools"
                             :key="option.key"
                             :value="option.key"
@@ -241,6 +251,20 @@
                 saved: undefined
             }
         },
+        computed: {
+            aliases: {
+                get() {
+                    return [
+                        ...this.spell.aliases,
+                        ""
+                    ]
+                },
+
+                set(value) {
+                    this.spell.aliases = value
+                }
+            }
+        },
         mounted() {
             const token = localStorage.getItem('token');
 
@@ -266,7 +290,7 @@
                 if (!list.length) return;
 
                 list.forEach(item => {
-                    spells.push(this.getParsedSpell(item))
+                    spells.push(_.cloneDeep(item))
                 });
 
                 this.spells = spells;
@@ -276,15 +300,6 @@
                 const lastSpell = this.spells.find(spell => spell._id === lastSpellID);
 
                 this.setSpellForEdit(lastSpell || spells[0])
-            },
-
-            getParsedSpell(spell) {
-                const aliases = spell.aliases.join(', ');
-
-                return _.cloneDeep({
-                    ...spell,
-                    aliases
-                })
             },
 
             setSpellForEdit(spell) {
@@ -302,18 +317,11 @@
             },
 
             saveSpell() {
-                const spellForUpdate = _.cloneDeep(this.spell);
-
-                const newSpell = {
-                    ...spellForUpdate,
-                    aliases: spellForUpdate.aliases ? spellForUpdate.aliases.split(', ') : []
-                }
-
                 this.$axios({
                     method: 'post',
                     url: '/update-spell',
                     data: {
-                        spell: { ...newSpell }
+                        spell: _.cloneDeep(this.spell)
                     }
                 }).then(res => {
                     if (Helpers.isQuerySuccess(res)) {
@@ -330,15 +338,23 @@
                 })
             },
 
-            async updateSpell(spell) {
+            updateSpell(spell) {
                 // eslint-disable-next-line no-underscore-dangle
                 const index = this.spells.findIndex(item => item._id === spell._id);
-                const newSpell = this.getParsedSpell(spell);
+                const newSpell = _.cloneDeep(spell);
 
                 this.spells[index] = newSpell;
 
                 this.setSpellForEdit(newSpell)
             },
+
+            updateAliases(e, index) {
+                const aliases = _.cloneDeep(this.aliases);
+
+                aliases[index] = e.target.value;
+
+                this.aliases = aliases;
+            }
         }
     }
 </script>
@@ -432,7 +448,9 @@
             }
 
             select {
-                cursor: pointer;
+                &:not(:disabled) {
+                    cursor: pointer;
+                }
             }
 
             textarea {
